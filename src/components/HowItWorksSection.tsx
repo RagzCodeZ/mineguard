@@ -1,37 +1,37 @@
 import { motion } from "framer-motion";
-import { Satellite, Scan, BarChart3, Bell } from "lucide-react";
+import { Satellite, Scan, BarChart3, Bell, TrendingUp } from "lucide-react";
 
 const steps = [
   {
     icon: Satellite,
     title: "Observe",
     description:
-      "Sentinel-1 and Sentinel-2 satellites pass over each site every few days.",
+      "Sentinel-1 and Sentinel-2 satellites pass over each site every few days, capturing radar and optical imagery.",
   },
   {
     icon: Scan,
     title: "Detect signals",
     description:
-      "MineGuard detects surface movement, water pooling, crack patterns, vegetation die-off, and oxidation.",
+      "MineGuard detects surface movement, water pooling, crack patterns, vegetation die-off, and oxidation signatures.",
   },
   {
     icon: BarChart3,
     title: "Score risk",
     description:
-      "Signals combine into a 1–100 site risk score with clear green/yellow/orange/red bands.",
+      "Signals combine into a 1–100 site risk score with clear green/yellow/orange/red bands for portfolio triage.",
   },
   {
     icon: Bell,
     title: "Alert & act",
     description:
-      "Underwriters, risk teams, and operators receive alerts and can act before failure.",
+      "Underwriters, risk teams, and operators receive alerts and can act before failure—weeks, not days.",
   },
 ];
 
 const benefits = [
-  "Better pricing and reserves.",
-  "Fewer surprise losses.",
-  "Defensible monitoring story for regulators and boards.",
+  { text: "Better pricing and reserves.", icon: TrendingUp },
+  { text: "Fewer surprise losses.", icon: BarChart3 },
+  { text: "Defensible monitoring story for regulators and boards.", icon: Bell },
 ];
 
 export function HowItWorksSection() {
@@ -98,15 +98,23 @@ export function HowItWorksSection() {
           className="bg-primary/5 rounded-2xl p-8 border border-primary/20"
         >
           <h3 className="text-xl font-semibold text-[hsl(210,20%,98%)] mb-6">
-            Why this matters
+            Why this matters for your portfolio
           </h3>
-          <div className="grid sm:grid-cols-3 gap-6">
+          <div className="grid sm:grid-cols-3 gap-6 mb-6">
             {benefits.map((benefit, i) => (
               <div key={i} className="flex items-center gap-3">
-                <div className="w-2 h-2 rounded-full bg-primary shrink-0" />
-                <span className="text-[hsl(210,20%,80%)]">{benefit}</span>
+                <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center shrink-0">
+                  <benefit.icon className="w-4 h-4 text-primary" />
+                </div>
+                <span className="text-[hsl(210,20%,80%)]">{benefit.text}</span>
               </div>
             ))}
+          </div>
+          {/* Investor note */}
+          <div className="pt-6 border-t border-primary/20">
+            <p className="text-sm text-[hsl(210,20%,60%)] italic text-center">
+              All built on low-cost, public satellite data and software margins—a highly scalable infrastructure analytics business.
+            </p>
           </div>
         </motion.div>
       </div>

@@ -1,129 +1,296 @@
 import { motion } from "framer-motion";
-import { MapPin, TrendingUp, AlertTriangle, Download, FileText, Activity } from "lucide-react";
+import { Download, ArrowRight, Filter } from "lucide-react";
+
+const siteList = [
+  { name: "Brumadinho Dam", score: 85, level: "HIGH", color: "red" },
+  { name: "Samarco", score: 74, level: "HIGH", color: "red" },
+  { name: "Mount Polley", score: 68, level: "MEDIUM", color: "orange" },
+  { name: "Oyu Tolgoi", score: 42, level: "MEDIUM", color: "yellow" },
+  { name: "Olympic Dam", score: 28, level: "LOW", color: "green" },
+  { name: "Escondida", score: 22, level: "LOW", color: "green" },
+];
+
+const sitePins = [
+  { x: "15%", y: "30%", color: "green" },
+  { x: "25%", y: "55%", color: "red" },
+  { x: "40%", y: "40%", color: "orange" },
+  { x: "55%", y: "25%", color: "yellow" },
+  { x: "65%", y: "60%", color: "red" },
+  { x: "80%", y: "45%", color: "green" },
+];
+
+const trendData = [
+  { week: 1, score: 22, annotation: null },
+  { week: 2, score: 25, annotation: null },
+  { week: 3, score: 28, annotation: null },
+  { week: 4, score: 32, annotation: null },
+  { week: 5, score: 38, annotation: null },
+  { week: 6, score: 45, annotation: "Vegetation stress begins" },
+  { week: 7, score: 52, annotation: null },
+  { week: 8, score: 58, annotation: null },
+  { week: 9, score: 68, annotation: "New water pooling detected" },
+  { week: 10, score: 75, annotation: null },
+  { week: 11, score: 80, annotation: null },
+  { week: 12, score: 85, annotation: "Ground deformation spikes" },
+];
+
+const alerts = [
+  {
+    severity: "HIGH",
+    message: "Ground deformation exceeded 10mm in 5 days",
+    site: "Brumadinho Dam",
+    time: "3 days ago",
+    color: "red",
+  },
+  {
+    severity: "MEDIUM",
+    message: "New water pooling detected near south wall",
+    site: "Site #204",
+    time: "5 days ago",
+    color: "orange",
+  },
+  {
+    severity: "LOW",
+    message: "NDVI drop near perimeter vegetation",
+    site: "Mount Polley",
+    time: "1 week ago",
+    color: "yellow",
+  },
+  {
+    severity: "HIGH",
+    message: "Surface crack pattern expansion detected",
+    site: "Samarco",
+    time: "1 week ago",
+    color: "red",
+  },
+];
 
 const productModules = [
   {
     title: "Portfolio Map View",
     caption: "Instantly see which dams in your global portfolio deserve attention today.",
     content: (
-      <div className="bg-dark-bg rounded-xl p-4 h-64 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-20 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJncmlkIiB3aWR0aD0iMzAiIGhlaWdodD0iMzAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiPjxwYXRoIGQ9Ik0gMzAgMCBMIDAgMCAwIDMwIiBmaWxsPSJub25lIiBzdHJva2U9IiMzYTRhNWEiIHN0cm9rZS13aWR0aD0iMC41Ii8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')]" />
-        <div className="relative z-10">
-          {/* Site pins */}
-          <div className="absolute top-4 left-8"><MapPin className="w-5 h-5 text-alert-green" /></div>
-          <div className="absolute top-12 left-1/4"><MapPin className="w-5 h-5 text-alert-green" /></div>
-          <div className="absolute top-6 right-1/3"><MapPin className="w-5 h-5 text-alert-yellow" /></div>
-          <div className="absolute top-20 right-1/4"><MapPin className="w-5 h-5 text-alert-red animate-pulse" /></div>
-          <div className="absolute bottom-16 left-1/3"><MapPin className="w-5 h-5 text-alert-orange" /></div>
-          <div className="absolute bottom-8 right-1/3"><MapPin className="w-5 h-5 text-alert-green" /></div>
-        </div>
-        {/* Side panel */}
-        <div className="absolute right-0 top-0 bottom-0 w-32 bg-dark-card/90 border-l border-dark-border p-3">
-          <p className="text-[10px] text-[hsl(210,20%,50%)] mb-2">SITES BY RISK</p>
-          <div className="space-y-2">
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-alert-red" />
-              <span className="text-[10px] text-[hsl(210,20%,70%)]">Brumadinho</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-alert-orange" />
-              <span className="text-[10px] text-[hsl(210,20%,70%)]">Mt Polley</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-alert-yellow" />
-              <span className="text-[10px] text-[hsl(210,20%,70%)]">Samarco</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-alert-green" />
-              <span className="text-[10px] text-[hsl(210,20%,70%)]">Others (12)</span>
-            </div>
+      <div className="bg-dark-bg rounded-xl h-72 relative overflow-hidden flex">
+        {/* Map area */}
+        <div className="flex-1 relative">
+          <div className="absolute inset-0 opacity-20 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSA0MCAwIEwgMCAwIDAgNDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzJhM2E1YSIgc3Ryb2tlLXdpZHRoPSIwLjUiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')]" />
+          
+          {/* Filter chips */}
+          <div className="absolute top-3 left-3 flex gap-1 z-10">
+            {["All", "High", "Medium", "Low"].map((filter, i) => (
+              <button
+                key={filter}
+                className={`px-2 py-0.5 rounded text-[9px] font-medium transition-colors ${
+                  i === 0
+                    ? "bg-primary text-primary-foreground"
+                    : "bg-dark-card text-[hsl(210,20%,60%)] hover:bg-dark-card/80"
+                }`}
+              >
+                {filter}
+              </button>
+            ))}
           </div>
-        </div>
-      </div>
-    ),
-  },
-  {
-    title: "Site Detail View",
-    caption: "Understand what's driving risk at a specific tailings dam, not just a single number.",
-    content: (
-      <div className="bg-dark-bg rounded-xl p-4 h-64">
-        <div className="flex items-center justify-between mb-4">
-          <div>
-            <p className="text-xs text-[hsl(210,20%,50%)]">SITE DETAIL</p>
-            <p className="font-semibold text-[hsl(210,20%,98%)]">Brumadinho Dam</p>
-          </div>
-          <div className="text-center">
-            <div className="text-4xl font-bold text-alert-red">85</div>
-            <span className="text-[10px] px-2 py-0.5 rounded-full risk-high">HIGH</span>
-          </div>
-        </div>
-        {/* Trend chart mock */}
-        <div className="bg-dark-card rounded-lg p-3 mb-4 h-20">
-          <p className="text-[10px] text-[hsl(210,20%,50%)] mb-2">12-WEEK TREND</p>
-          <div className="flex items-end gap-1 h-10">
-            {[45, 48, 52, 55, 60, 65, 68, 72, 78, 82, 84, 85].map((val, i) => (
+
+          {/* Pins */}
+          {sitePins.map((pin, i) => (
+            <div
+              key={i}
+              className="absolute transform -translate-x-1/2 -translate-y-1/2"
+              style={{ left: pin.x, top: pin.y }}
+            >
               <div
-                key={i}
-                className={`flex-1 rounded-sm ${val > 70 ? 'bg-alert-red' : val > 50 ? 'bg-alert-orange' : 'bg-alert-yellow'}`}
-                style={{ height: `${val}%` }}
+                className={`w-2.5 h-2.5 rounded-full ${
+                  pin.color === "red"
+                    ? "bg-alert-red"
+                    : pin.color === "orange"
+                    ? "bg-alert-orange"
+                    : pin.color === "yellow"
+                    ? "bg-alert-yellow"
+                    : "bg-alert-green"
+                }`}
               />
+            </div>
+          ))}
+        </div>
+
+        {/* Site list panel */}
+        <div className="w-36 bg-dark-card/90 border-l border-dark-border p-3 overflow-y-auto">
+          <div className="flex items-center gap-1 mb-3">
+            <Filter className="w-3 h-3 text-[hsl(210,20%,50%)]" />
+            <p className="text-[9px] text-[hsl(210,20%,50%)] font-medium">SITES BY RISK</p>
+          </div>
+          <div className="space-y-2">
+            {siteList.map((site) => (
+              <div key={site.name} className="flex items-center justify-between gap-2">
+                <div className="flex items-center gap-1.5 min-w-0">
+                  <div
+                    className={`w-1.5 h-1.5 rounded-full shrink-0 ${
+                      site.color === "red"
+                        ? "bg-alert-red"
+                        : site.color === "orange"
+                        ? "bg-alert-orange"
+                        : site.color === "yellow"
+                        ? "bg-alert-yellow"
+                        : "bg-alert-green"
+                    }`}
+                  />
+                  <span className="text-[9px] text-[hsl(210,20%,70%)] truncate">{site.name}</span>
+                </div>
+                <span className={`text-[8px] font-bold ${
+                  site.color === "red"
+                    ? "text-alert-red"
+                    : site.color === "orange"
+                    ? "text-alert-orange"
+                    : site.color === "yellow"
+                    ? "text-alert-yellow"
+                    : "text-alert-green"
+                }`}>
+                  {site.score}
+                </span>
+              </div>
             ))}
           </div>
         </div>
-        {/* Contributing factors */}
-        <div className="grid grid-cols-3 gap-2">
-          {[
-            { name: "Movement", value: 92, icon: Activity },
-            { name: "Water", value: 78, icon: TrendingUp },
-            { name: "Cracks", value: 65, icon: AlertTriangle },
-          ].map((factor) => (
-            <div key={factor.name} className="bg-dark-card rounded-lg p-2 text-center">
-              <factor.icon className="w-3 h-3 mx-auto mb-1 text-[hsl(210,20%,50%)]" />
-              <p className="text-[10px] text-[hsl(210,20%,50%)]">{factor.name}</p>
-              <p className="text-sm font-semibold text-[hsl(210,20%,98%)]">{factor.value}%</p>
+      </div>
+    ),
+  },
+  {
+    title: "Site Risk Trend",
+    caption: "Understand what's driving risk at a specific tailings dam over time.",
+    content: (
+      <div className="bg-dark-bg rounded-xl p-4 h-72">
+        <div className="flex items-center justify-between mb-3">
+          <div>
+            <p className="text-[10px] text-[hsl(210,20%,50%)]">BRUMADINHO DAM</p>
+            <p className="text-sm font-semibold text-[hsl(210,20%,98%)]">12-Week Risk Trend</p>
+          </div>
+          <div className="text-right">
+            <div className="text-2xl font-bold text-alert-red">85</div>
+            <span className="text-[8px] px-1.5 py-0.5 rounded risk-high">HIGH</span>
+          </div>
+        </div>
+
+        {/* Chart */}
+        <div className="relative h-40 mt-4">
+          {/* Threshold lines */}
+          <div className="absolute left-8 right-0 top-[30%] border-t border-dashed border-alert-red/40" />
+          <div className="absolute left-0 top-[30%] text-[8px] text-alert-red/60">70</div>
+          <div className="absolute left-8 right-0 top-[60%] border-t border-dashed border-alert-yellow/40" />
+          <div className="absolute left-0 top-[60%] text-[8px] text-alert-yellow/60">40</div>
+          
+          {/* Y-axis labels */}
+          <div className="absolute left-0 top-0 text-[8px] text-[hsl(210,20%,50%)]">100</div>
+          <div className="absolute left-0 bottom-0 text-[8px] text-[hsl(210,20%,50%)]">0</div>
+
+          {/* Line chart */}
+          <svg className="absolute left-8 right-0 top-0 bottom-0 h-full w-[calc(100%-2rem)]" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="hsl(48, 96%, 53%)" />
+                <stop offset="50%" stopColor="hsl(25, 95%, 53%)" />
+                <stop offset="100%" stopColor="hsl(0, 84%, 60%)" />
+              </linearGradient>
+            </defs>
+            <polyline
+              fill="none"
+              stroke="url(#lineGradient)"
+              strokeWidth="2"
+              points={trendData
+                .map((d, i) => `${(i / 11) * 100}%,${100 - d.score}%`)
+                .join(" ")}
+            />
+            {/* Data points */}
+            {trendData.map((d, i) => (
+              <circle
+                key={i}
+                cx={`${(i / 11) * 100}%`}
+                cy={`${100 - d.score}%`}
+                r="3"
+                fill={d.score > 70 ? "hsl(0, 84%, 60%)" : d.score > 40 ? "hsl(25, 95%, 53%)" : "hsl(48, 96%, 53%)"}
+              />
+            ))}
+          </svg>
+
+          {/* Annotations */}
+          {trendData.filter(d => d.annotation).map((d, i) => (
+            <div
+              key={i}
+              className="absolute text-[7px] text-[hsl(210,20%,60%)] bg-dark-card/90 px-1 py-0.5 rounded whitespace-nowrap"
+              style={{
+                left: `calc(2rem + ${((d.week - 1) / 11) * (100 - 2)}%)`,
+                top: `calc(${100 - d.score - 12}%)`,
+                transform: "translateX(-50%)",
+              }}
+            >
+              {d.annotation}
             </div>
+          ))}
+        </div>
+
+        {/* X-axis labels */}
+        <div className="flex justify-between pl-8 mt-1">
+          {[1, 4, 8, 12].map((week) => (
+            <span key={week} className="text-[8px] text-[hsl(210,20%,50%)]">Week {week}</span>
           ))}
         </div>
       </div>
     ),
   },
   {
-    title: "Alert Feed & Export",
-    caption: "Deliver a continuous stream of actionable alerts to underwriting and risk teams, exportable to existing systems.",
+    title: "Alert Feed",
+    caption: "Deliver a continuous stream of actionable alerts to underwriting and risk teams.",
     content: (
-      <div className="bg-dark-bg rounded-xl p-4 h-64">
+      <div className="bg-dark-bg rounded-xl p-4 h-72">
         <div className="flex items-center justify-between mb-4">
-          <p className="text-xs text-[hsl(210,20%,50%)]">RECENT ALERTS</p>
-          <button className="flex items-center gap-1 text-xs text-primary hover:text-primary/80">
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 rounded-full bg-alert-green animate-pulse" />
+            <p className="text-[10px] text-[hsl(210,20%,50%)]">LIVE ALERTS</p>
+          </div>
+          <button className="flex items-center gap-1 text-[10px] text-primary hover:text-primary/80">
             <Download className="w-3 h-3" />
-            Export
+            Export CSV
           </button>
         </div>
         <div className="space-y-2">
-          {[
-            { site: "Brumadinho", alert: "Critical ground deformation", level: "red", time: "2h ago" },
-            { site: "Mt Polley", alert: "Water level increase", level: "orange", time: "4h ago" },
-            { site: "Samarco", alert: "Vegetation anomaly detected", level: "yellow", time: "1d ago" },
-            { site: "Site 4", alert: "Routine scan complete", level: "green", time: "1d ago" },
-          ].map((item, i) => (
-            <div key={i} className="flex items-center gap-3 bg-dark-card rounded-lg p-3">
-              <div className={`w-2 h-2 rounded-full ${
-                item.level === 'red' ? 'bg-alert-red' :
-                item.level === 'orange' ? 'bg-alert-orange' :
-                item.level === 'yellow' ? 'bg-alert-yellow' : 'bg-alert-green'
-              }`} />
+          {alerts.map((alert, i) => (
+            <div
+              key={i}
+              className="flex items-start gap-3 bg-dark-card rounded-lg p-3 border-l-2"
+              style={{
+                borderLeftColor:
+                  alert.color === "red"
+                    ? "hsl(0, 84%, 60%)"
+                    : alert.color === "orange"
+                    ? "hsl(25, 95%, 53%)"
+                    : "hsl(48, 96%, 53%)",
+              }}
+            >
+              <span
+                className={`text-[8px] px-1.5 py-0.5 rounded font-bold ${
+                  alert.color === "red"
+                    ? "risk-high"
+                    : alert.color === "orange"
+                    ? "risk-medium"
+                    : "risk-low"
+                }`}
+              >
+                {alert.severity}
+              </span>
               <div className="flex-1 min-w-0">
-                <p className="text-xs font-medium text-[hsl(210,20%,98%)] truncate">{item.site}</p>
-                <p className="text-[10px] text-[hsl(210,20%,60%)] truncate">{item.alert}</p>
+                <p className="text-[10px] font-medium text-[hsl(210,20%,98%)] leading-tight">
+                  {alert.message}
+                </p>
+                <p className="text-[9px] text-[hsl(210,20%,50%)] mt-0.5">{alert.site}</p>
               </div>
-              <span className="text-[10px] text-[hsl(210,20%,50%)]">{item.time}</span>
+              <div className="flex flex-col items-end gap-1">
+                <span className="text-[8px] text-[hsl(210,20%,50%)]">{alert.time}</span>
+                <button className="text-[8px] text-primary hover:underline flex items-center gap-0.5">
+                  View <ArrowRight className="w-2 h-2" />
+                </button>
+              </div>
             </div>
           ))}
         </div>
-        <button className="w-full mt-3 flex items-center justify-center gap-2 text-xs text-[hsl(210,20%,60%)] hover:text-[hsl(210,20%,80%)]">
-          <FileText className="w-3 h-3" />
-          View full history
-        </button>
       </div>
     ),
   },
@@ -144,8 +311,8 @@ export function ProductSection() {
             What MineGuard looks like in your hands
           </h2>
           <p className="body-lg text-muted-foreground">
-            A purpose-built interface for mining insurance professionals, not another
-            generic analytics dashboard.
+            A purpose-built interface for mining insurance professionals—designed for
+            portfolio visibility, not geological deep-dives.
           </p>
         </motion.div>
 

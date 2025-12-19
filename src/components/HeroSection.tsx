@@ -1,6 +1,17 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, AlertTriangle, TrendingUp, MapPin } from "lucide-react";
+import { ArrowRight, TrendingUp, Droplets, Mountain } from "lucide-react";
 import { motion } from "framer-motion";
+
+const sitePins = [
+  { id: 1, x: "18%", y: "35%", color: "green", name: "Oyu Tolgoi" },
+  { id: 2, x: "75%", y: "28%", color: "green", name: "Grasberg" },
+  { id: 3, x: "45%", y: "55%", color: "yellow", name: "Mount Polley" },
+  { id: 4, x: "28%", y: "62%", color: "red", name: "Brumadinho", pulse: true },
+  { id: 5, x: "55%", y: "42%", color: "yellow", name: "Samarco" },
+  { id: 6, x: "82%", y: "58%", color: "green", name: "Olympic Dam" },
+  { id: 7, x: "38%", y: "25%", color: "green", name: "Escondida" },
+  { id: 8, x: "62%", y: "68%", color: "red", name: "Site #204", pulse: true },
+];
 
 export function HeroSection() {
   return (
@@ -30,7 +41,7 @@ export function HeroSection() {
 
             <ul className="space-y-4 mb-10">
               {[
-                "Portfolio-level risk map, updated every 5 days.",
+                "Portfolio-wide risk map updating every 5 days.",
                 "Detect surface movement, water pooling, cracks, and vegetation stress from space.",
                 "Built for mining insurers and brokers, not geologists.",
               ].map((item, i) => (
@@ -54,88 +65,148 @@ export function HeroSection() {
             </div>
           </motion.div>
 
-          {/* Right Column - Dashboard Mock */}
+          {/* Right Column - Dynamic Portfolio Map */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             className="relative"
           >
-            <div className="bg-card-gradient rounded-2xl border border-dark-border p-6 glow-teal">
+            <div className="bg-card-gradient rounded-2xl border border-dark-border p-4 glow-teal">
               {/* Dashboard Header */}
-              <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full bg-alert-red" />
-                  <div className="w-3 h-3 rounded-full bg-alert-yellow" />
-                  <div className="w-3 h-3 rounded-full bg-alert-green" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-alert-red" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-alert-yellow" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-alert-green" />
                 </div>
-                <span className="text-xs text-[hsl(210,20%,50%)]">MineGuard Dashboard</span>
-              </div>
-
-              {/* World Map Placeholder */}
-              <div className="bg-dark-bg rounded-xl p-4 mb-4 relative h-48 overflow-hidden">
-                <div className="absolute inset-0 opacity-30 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJncmlkIiB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiPjxwYXRoIGQ9Ik0gMjAgMCBMIDAgMCAwIDIwIiBmaWxsPSJub25lIiBzdHJva2U9IiMyYTNhNGEiIHN0cm9rZS13aWR0aD0iMC41Ii8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')]" />
-                <div className="relative z-10 h-full flex items-center justify-center">
-                  {/* Site Pins */}
-                  <div className="absolute top-8 left-1/4">
-                    <MapPin className="w-6 h-6 text-alert-green" />
-                  </div>
-                  <div className="absolute top-12 right-1/3">
-                    <MapPin className="w-6 h-6 text-alert-yellow" />
-                  </div>
-                  <div className="absolute bottom-12 left-1/3">
-                    <MapPin className="w-6 h-6 text-alert-red animate-pulse" />
-                  </div>
-                  <div className="absolute bottom-8 right-1/4">
-                    <MapPin className="w-6 h-6 text-alert-green" />
-                  </div>
-                  <span className="text-xs text-[hsl(210,20%,40%)]">Global Portfolio View</span>
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-alert-green animate-pulse" />
+                  <span className="text-xs text-[hsl(210,20%,50%)]">Live Portfolio Map</span>
                 </div>
               </div>
 
-              {/* Risk Score Card */}
-              <div className="bg-dark-bg rounded-xl p-4 mb-4 border border-alert-red/30">
-                <div className="flex items-center justify-between mb-3">
-                  <div>
-                    <p className="text-xs text-[hsl(210,20%,50%)] mb-1">HIGHEST RISK SITE</p>
-                    <p className="font-semibold text-[hsl(210,20%,98%)]">Brumadinho Tailings Dam</p>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-3xl font-bold text-alert-red">85</div>
-                    <span className="text-xs px-2 py-0.5 rounded-full risk-high">HIGH RISK</span>
-                  </div>
+              {/* World Map with Pins */}
+              <div className="relative h-72 lg:h-80 rounded-xl overflow-hidden bg-[hsl(220,25%,8%)]">
+                {/* Grid overlay */}
+                <div className="absolute inset-0 opacity-20 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSA0MCAwIEwgMCAwIDAgNDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzJhM2E1YSIgc3Ryb2tlLXdpZHRoPSIwLjUiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')]" />
+                
+                {/* Simplified world map silhouette */}
+                <div className="absolute inset-0 opacity-30">
+                  <svg viewBox="0 0 1000 500" className="w-full h-full" preserveAspectRatio="xMidYMid slice">
+                    <path 
+                      d="M150,100 Q200,80 280,90 L350,85 Q400,95 450,80 L480,85 Q520,70 580,90 L650,95 Q700,85 750,100 L800,105 Q850,90 900,110 L920,150 Q890,200 850,230 L800,260 Q750,290 700,280 L650,270 Q600,290 550,300 L500,320 Q450,350 400,330 L350,310 Q300,340 250,320 L200,290 Q150,260 120,220 L100,180 Q90,140 100,110 Z M450,180 Q500,160 550,170 L600,190 Q650,200 680,230 L700,270 Q680,310 650,320 L600,330 Q550,350 500,340 L450,320 Q400,340 370,310 L350,270 Q360,230 390,200 Z" 
+                      fill="hsl(200, 30%, 15%)"
+                      stroke="hsl(185, 60%, 25%)"
+                      strokeWidth="1"
+                    />
+                  </svg>
                 </div>
-                <div className="flex items-center gap-2 text-xs text-[hsl(210,20%,50%)]">
-                  <TrendingUp className="w-3 h-3 text-alert-red" />
-                  <span>+12 points in last 30 days</span>
-                </div>
-              </div>
 
-              {/* Alert List */}
-              <div className="space-y-2">
-                <p className="text-xs text-[hsl(210,20%,50%)] mb-2">RECENT ALERTS</p>
-                {[
-                  { text: "Ground deformation detected", level: "high" },
-                  { text: "Water pooling increased", level: "medium" },
-                  { text: "Vegetation stress anomaly", level: "low" },
-                ].map((alert, i) => (
+                {/* Site Pins */}
+                {sitePins.map((pin) => (
                   <div
-                    key={i}
-                    className="flex items-center gap-3 bg-dark-bg rounded-lg p-3"
+                    key={pin.id}
+                    className="absolute transform -translate-x-1/2 -translate-y-1/2"
+                    style={{ left: pin.x, top: pin.y }}
                   >
-                    <AlertTriangle
-                      className={`w-4 h-4 ${
-                        alert.level === "high"
-                          ? "text-alert-red"
-                          : alert.level === "medium"
-                          ? "text-alert-orange"
-                          : "text-alert-yellow"
+                    {/* Pulse ring for high-risk sites */}
+                    {pin.pulse && (
+                      <motion.div
+                        className={`absolute inset-0 rounded-full ${
+                          pin.color === "red" ? "bg-alert-red" : "bg-alert-orange"
+                        }`}
+                        animate={{
+                          scale: [1, 2.5, 1],
+                          opacity: [0.6, 0, 0.6],
+                        }}
+                        transition={{
+                          duration: 2,
+                          repeat: Infinity,
+                          ease: "easeOut",
+                        }}
+                        style={{ width: 12, height: 12, marginLeft: -2, marginTop: -2 }}
+                      />
+                    )}
+                    <div
+                      className={`w-3 h-3 rounded-full border-2 border-[hsl(220,25%,8%)] relative z-10 ${
+                        pin.color === "red"
+                          ? "bg-alert-red"
+                          : pin.color === "yellow"
+                          ? "bg-alert-yellow"
+                          : "bg-alert-green"
                       }`}
                     />
-                    <span className="text-sm text-[hsl(210,20%,80%)]">{alert.text}</span>
                   </div>
                 ))}
+
+                {/* Brumadinho Tooltip Card */}
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.8, duration: 0.5 }}
+                  className="absolute bg-dark-card/95 backdrop-blur-sm rounded-lg border border-alert-red/40 p-3 shadow-xl"
+                  style={{ left: "32%", top: "48%", minWidth: "220px" }}
+                >
+                  <div className="flex items-start justify-between gap-3 mb-2">
+                    <div>
+                      <p className="text-xs font-semibold text-[hsl(210,20%,98%)]">Brumadinho Tailings Dam</p>
+                      <p className="text-[10px] text-[hsl(210,20%,50%)]">Updated 3 days ago</p>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-xl font-bold text-alert-red">85</div>
+                      <span className="text-[8px] px-1.5 py-0.5 rounded risk-high">HIGH RISK</span>
+                    </div>
+                  </div>
+                  <div className="space-y-1 pt-2 border-t border-dark-border">
+                    <div className="flex items-center gap-2 text-[10px] text-[hsl(210,20%,70%)]">
+                      <Mountain className="w-3 h-3 text-alert-red" />
+                      <span>Surface movement ↑ 12mm</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-[10px] text-[hsl(210,20%,70%)]">
+                      <Droplets className="w-3 h-3 text-alert-orange" />
+                      <span>Water pooling ↑ 18%</span>
+                    </div>
+                  </div>
+                </motion.div>
+
+                {/* Legend */}
+                <div className="absolute bottom-3 right-3 flex items-center gap-3 bg-dark-card/80 backdrop-blur-sm rounded-lg px-3 py-2">
+                  <div className="flex items-center gap-1.5">
+                    <div className="w-2 h-2 rounded-full bg-alert-green" />
+                    <span className="text-[10px] text-[hsl(210,20%,60%)]">Low</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <div className="w-2 h-2 rounded-full bg-alert-yellow" />
+                    <span className="text-[10px] text-[hsl(210,20%,60%)]">Medium</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <div className="w-2 h-2 rounded-full bg-alert-red" />
+                    <span className="text-[10px] text-[hsl(210,20%,60%)]">High</span>
+                  </div>
+                </div>
               </div>
+
+              {/* Risk Summary Bar */}
+              <div className="mt-4 grid grid-cols-3 gap-3">
+                <div className="bg-dark-bg rounded-lg p-3 text-center">
+                  <div className="text-lg font-bold text-alert-red">2</div>
+                  <p className="text-[10px] text-[hsl(210,20%,50%)]">High Risk</p>
+                </div>
+                <div className="bg-dark-bg rounded-lg p-3 text-center">
+                  <div className="text-lg font-bold text-alert-yellow">2</div>
+                  <p className="text-[10px] text-[hsl(210,20%,50%)]">Medium Risk</p>
+                </div>
+                <div className="bg-dark-bg rounded-lg p-3 text-center">
+                  <div className="text-lg font-bold text-alert-green">4</div>
+                  <p className="text-[10px] text-[hsl(210,20%,50%)]">Low Risk</p>
+                </div>
+              </div>
+
+              {/* Microcopy */}
+              <p className="text-[10px] text-[hsl(210,20%,45%)] text-center mt-3 italic">
+                Example portfolio view: each dot is a monitored mine. Colors update every 5 days based on new satellite passes.
+              </p>
             </div>
           </motion.div>
         </div>
