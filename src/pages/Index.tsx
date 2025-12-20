@@ -4,13 +4,19 @@ import { ProblemSection } from "@/components/ProblemSection";
 import { HowItWorksSection } from "@/components/HowItWorksSection";
 import { ProductSection } from "@/components/ProductSection";
 import { CaseStudySection } from "@/components/CaseStudySection";
+import { CadiaSection } from "@/components/CadiaSection";
 import { AudienceSection } from "@/components/AudienceSection";
 import { ROISection } from "@/components/ROISection";
 import { TrustSection } from "@/components/TrustSection";
 import { FAQSection } from "@/components/FAQSection";
 import { Footer } from "@/components/Footer";
+import { DemoProvider } from "@/contexts/DemoContext";
+import { DemoBookingPanel } from "@/components/DemoBookingPanel";
+import { useDemo } from "@/contexts/DemoContext";
 
-const Index = () => {
+function PageContent() {
+  const { isOpen, closeDemo } = useDemo();
+
   return (
     <div className="min-h-screen">
       <Navigation />
@@ -20,13 +26,23 @@ const Index = () => {
         <HowItWorksSection />
         <ProductSection />
         <CaseStudySection />
+        <CadiaSection />
         <AudienceSection />
         <ROISection />
         <TrustSection />
         <FAQSection />
       </main>
       <Footer />
+      <DemoBookingPanel isOpen={isOpen} onClose={closeDemo} />
     </div>
+  );
+}
+
+const Index = () => {
+  return (
+    <DemoProvider>
+      <PageContent />
+    </DemoProvider>
   );
 };
 
