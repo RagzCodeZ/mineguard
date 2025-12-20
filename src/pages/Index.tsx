@@ -10,11 +10,10 @@ import { ROISection } from "@/components/ROISection";
 import { TrustSection } from "@/components/TrustSection";
 import { FAQSection } from "@/components/FAQSection";
 import { Footer } from "@/components/Footer";
-import { DemoProvider } from "@/contexts/DemoContext";
 import { DemoBookingPanel } from "@/components/DemoBookingPanel";
 import { useDemo } from "@/contexts/DemoContext";
 
-function PageContent() {
+const Index = () => {
   const { isOpen, closeDemo } = useDemo();
 
   return (
@@ -35,14 +34,6 @@ function PageContent() {
       <Footer />
       <DemoBookingPanel isOpen={isOpen} onClose={closeDemo} />
     </div>
-  );
-}
-
-const Index = () => {
-  return (
-    <DemoProvider>
-      <PageContent />
-    </DemoProvider>
   );
 };
 
