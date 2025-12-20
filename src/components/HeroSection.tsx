@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, TrendingUp, Droplets, Mountain } from "lucide-react";
 import { motion } from "framer-motion";
+import { useDemo } from "@/contexts/DemoContext";
 
 const sitePins = [
   { id: 1, x: "18%", y: "35%", color: "green", name: "Oyu Tolgoi" },
@@ -14,6 +15,8 @@ const sitePins = [
 ];
 
 export function HeroSection() {
+  const { openDemo } = useDemo();
+
   return (
     <section className="section-dark min-h-screen pt-20 lg:pt-28 relative overflow-hidden">
       {/* Background Effects */}
@@ -55,14 +58,19 @@ export function HeroSection() {
             </ul>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button variant="hero" size="xl">
+              <Button variant="hero" size="xl" onClick={openDemo}>
                 Book a 30-minute demo
               </Button>
-              <Button variant="hero-outline" size="xl" className="group">
-                Explore the Brumadinho scenario
-                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              <Button variant="hero-outline" size="xl" className="group" asChild>
+                <a href="#case-study">
+                  Explore the Brumadinho scenario
+                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                </a>
               </Button>
             </div>
+            <p className="text-xs text-[hsl(210,20%,50%)] mt-4">
+              30-minute video call: live dashboard + Brumadinho and Cadia scenarios.
+            </p>
           </motion.div>
 
           {/* Right Column - Dynamic Portfolio Map */}

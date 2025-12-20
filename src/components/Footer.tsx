@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Mail, Linkedin } from "lucide-react";
+import { useDemo } from "@/contexts/DemoContext";
 
 const footerLinks = {
   product: [
@@ -19,6 +20,8 @@ const footerLinks = {
 };
 
 export function Footer() {
+  const { openDemo } = useDemo();
+
   return (
     <footer className="section-light">
       {/* Final CTA */}
@@ -37,11 +40,11 @@ export function Footer() {
             Join leading insurers who are moving from reactive claims to proactive risk management.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Button variant="hero" size="xl" className="group">
+            <Button variant="hero" size="xl" className="group" onClick={openDemo}>
               Book a demo
               <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
             </Button>
-            <Button variant="outline" size="xl">
+            <Button variant="outline" size="xl" onClick={openDemo}>
               Request an investor overview
             </Button>
           </div>

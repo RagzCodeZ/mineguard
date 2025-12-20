@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, AlertTriangle, Leaf, Droplets, Mountain, Clock, Skull, DollarSign, Scale, ShieldAlert } from "lucide-react";
+import { useDemo } from "@/contexts/DemoContext";
 
 const timeline = [
   {
@@ -56,6 +57,8 @@ const impactPoints = [
 ];
 
 export function CaseStudySection() {
+  const { openDemo } = useDemo();
+
   return (
     <section id="case-study" className="section-dark py-20 lg:py-32">
       <div className="container-wide">
@@ -200,7 +203,7 @@ export function CaseStudySection() {
                 <p className="text-sm text-[hsl(210,20%,70%)] mb-4">
                   We'll show you a simulated Brumadinho timeline using the same data sources MineGuard analyzes.
                 </p>
-                <Button variant="hero" size="lg" className="w-full group">
+                <Button variant="hero" size="lg" className="w-full group" onClick={openDemo}>
                   Walk through this scenario in a live demo
                   <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </Button>

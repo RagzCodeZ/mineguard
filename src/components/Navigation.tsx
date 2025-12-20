@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useDemo } from "@/contexts/DemoContext";
 
 const navLinks = [
   { name: "Product", href: "#product" },
@@ -14,6 +15,7 @@ const navLinks = [
 
 export function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { openDemo } = useDemo();
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-dark-bg/90 backdrop-blur-xl border-b border-dark-border">
@@ -42,7 +44,7 @@ export function Navigation() {
 
           {/* CTA Button */}
           <div className="hidden lg:block">
-            <Button variant="nav" size="default">
+            <Button variant="nav" size="default" onClick={openDemo}>
               Book a demo
             </Button>
           </div>
@@ -77,7 +79,7 @@ export function Navigation() {
                   {link.name}
                 </a>
               ))}
-              <Button variant="hero" size="lg" className="w-full mt-4">
+              <Button variant="hero" size="lg" className="w-full mt-4" onClick={() => { setMobileMenuOpen(false); openDemo(); }}>
                 Book a demo
               </Button>
             </div>
