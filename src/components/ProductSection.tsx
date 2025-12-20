@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Download, ArrowRight, Filter } from "lucide-react";
+import { MineMap } from "./MineMap";
 
 const siteList = [
   { name: "Brumadinho Dam", score: 85, level: "HIGH", color: "red" },
@@ -8,15 +9,6 @@ const siteList = [
   { name: "Oyu Tolgoi", score: 42, level: "MEDIUM", color: "yellow" },
   { name: "Olympic Dam", score: 28, level: "LOW", color: "green" },
   { name: "Escondida", score: 22, level: "LOW", color: "green" },
-];
-
-const sitePins = [
-  { x: "15%", y: "30%", color: "green" },
-  { x: "25%", y: "55%", color: "red" },
-  { x: "40%", y: "40%", color: "orange" },
-  { x: "55%", y: "25%", color: "yellow" },
-  { x: "65%", y: "60%", color: "red" },
-  { x: "80%", y: "45%", color: "green" },
 ];
 
 const trendData = [
@@ -66,94 +58,6 @@ const alerts = [
 ];
 
 const productModules = [
-  {
-    title: "Portfolio Map View",
-    caption: "Instantly see which dams in your global portfolio deserve attention today.",
-    content: (
-      <div className="bg-dark-bg rounded-xl h-72 relative overflow-hidden flex">
-        {/* Map area */}
-        <div className="flex-1 relative">
-          <div className="absolute inset-0 opacity-20 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSA0MCAwIEwgMCAwIDAgNDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzJhM2E1YSIgc3Ryb2tlLXdpZHRoPSIwLjUiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')]" />
-          
-          {/* Filter chips */}
-          <div className="absolute top-3 left-3 flex gap-1 z-10">
-            {["All", "High", "Medium", "Low"].map((filter, i) => (
-              <button
-                key={filter}
-                className={`px-2 py-0.5 rounded text-[9px] font-medium transition-colors ${
-                  i === 0
-                    ? "bg-primary text-primary-foreground"
-                    : "bg-dark-card text-[hsl(210,20%,60%)] hover:bg-dark-card/80"
-                }`}
-              >
-                {filter}
-              </button>
-            ))}
-          </div>
-
-          {/* Pins */}
-          {sitePins.map((pin, i) => (
-            <div
-              key={i}
-              className="absolute transform -translate-x-1/2 -translate-y-1/2"
-              style={{ left: pin.x, top: pin.y }}
-            >
-              <div
-                className={`w-2.5 h-2.5 rounded-full ${
-                  pin.color === "red"
-                    ? "bg-alert-red"
-                    : pin.color === "orange"
-                    ? "bg-alert-orange"
-                    : pin.color === "yellow"
-                    ? "bg-alert-yellow"
-                    : "bg-alert-green"
-                }`}
-              />
-            </div>
-          ))}
-        </div>
-
-        {/* Site list panel */}
-        <div className="w-36 bg-dark-card/90 border-l border-dark-border p-3 overflow-y-auto">
-          <div className="flex items-center gap-1 mb-3">
-            <Filter className="w-3 h-3 text-[hsl(210,20%,50%)]" />
-            <p className="text-[9px] text-[hsl(210,20%,50%)] font-medium">SITES BY RISK</p>
-          </div>
-          <div className="space-y-2">
-            {siteList.map((site) => (
-              <div key={site.name} className="flex items-center justify-between gap-2">
-                <div className="flex items-center gap-1.5 min-w-0">
-                  <div
-                    className={`w-1.5 h-1.5 rounded-full shrink-0 ${
-                      site.color === "red"
-                        ? "bg-alert-red"
-                        : site.color === "orange"
-                        ? "bg-alert-orange"
-                        : site.color === "yellow"
-                        ? "bg-alert-yellow"
-                        : "bg-alert-green"
-                    }`}
-                  />
-                  <span className="text-[9px] text-[hsl(210,20%,70%)] truncate">{site.name}</span>
-                </div>
-                <span className={`text-[8px] font-bold ${
-                  site.color === "red"
-                    ? "text-alert-red"
-                    : site.color === "orange"
-                    ? "text-alert-orange"
-                    : site.color === "yellow"
-                    ? "text-alert-yellow"
-                    : "text-alert-green"
-                }`}>
-                  {site.score}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    ),
-  },
   {
     title: "Site Risk Trend",
     caption: "Understand what's driving risk at a specific tailings dam over time.",
@@ -316,7 +220,29 @@ export function ProductSection() {
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-3 gap-6">
+        {/* Full-width Portfolio Map */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="mb-8"
+        >
+          <div className="bg-card-gradient rounded-2xl border border-dark-border overflow-hidden">
+            <MineMap />
+            <div className="p-6 border-t border-dark-border">
+              <h3 className="text-lg font-semibold text-[hsl(210,20%,98%)] mb-2">
+                Portfolio Map View
+              </h3>
+              <p className="text-sm text-[hsl(210,20%,70%)]">
+                Instantly see which dams in your global portfolio deserve attention today. Click any pin for detailed risk analysis.
+              </p>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Two-column layout for other modules */}
+        <div className="grid lg:grid-cols-2 gap-6">
           {productModules.map((module, index) => (
             <motion.div
               key={module.title}
