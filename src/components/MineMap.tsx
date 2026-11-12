@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
-import { MapContainer, TileLayer, CircleMarker, Popup, useMap } from "react-leaflet";
+import { MapContainer, CircleMarker, Popup, useMap } from "react-leaflet";
+import { maplibreGL } from "@maplibre/maplibre-gl-leaflet";
+import "maplibre-gl/dist/maplibre-gl.css";
 import { motion, AnimatePresence } from "framer-motion";
 import { TrendingUp, AlertTriangle, ArrowRight, X, Filter, Search, MapPin } from "lucide-react";
 import "leaflet/dist/leaflet.css";
@@ -315,6 +317,22 @@ function MiniTrendChart({ data }: { data: number[] }) {
       />
     </svg>
   );
+}
+
+function DarkBasemap() {
+  const map = useMap();
+
+  useEffect(() => {
+    const layer = maplibreGL({
+      style: "https://tiles.openfreemap.org/styles/dark",
+    });
+    layer.addTo(map);
+    return () => {
+      map.removeLayer(layer);
+    };
+  }, [map]);
+
+  return null;
 }
 
 function MapController({ center, zoom }: { center: [number, number]; zoom: number }) {
@@ -633,10 +651,7 @@ export function MineMap() {
             style={{ background: "hsl(222, 47%, 11%)" }}
           >
             <MapController center={mapCenter} zoom={mapZoom} />
-            <TileLayer
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-              url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-            />
+            <DarkBasemap />
             {filteredSites.map((site) => {
               const colors = getRiskColor(site.riskLevel);
               const isHovered = hoveredSite === site.id;

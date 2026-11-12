@@ -1,0 +1,2 @@
+## Map architecture
+- Render the portfolio basemap with OpenFreeMap through the MapLibre Leaflet adapter; keep Leaflet markers and controls to preserve interaction without requiring a basemap API credential.
