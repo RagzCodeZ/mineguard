@@ -1,0 +1,3 @@
+- [x] Replace the key-required portfolio basemap.
+- [x] Verify map rendering and interaction on desktop and mobile.
+- [ ] Request website publishing after checks.
